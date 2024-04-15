@@ -7,6 +7,7 @@ import SectionForGoals from './modules/Goals/section/SectionForGoals';
 import SectionForClasses from './modules/Classes/section/SectionForClasses';
 import TopicsForClasses from './modules/Classes/topic/TopicsForClasses'
 import SubtopicsForClasses from './modules/Classes/subtopic/SubtopicsForClasses'
+import TasksForClasses from './modules/Classes/task/TasksForClasses';
 
 const AdminPage = () => {
   return (
@@ -22,6 +23,7 @@ const AdminPage = () => {
           <Route path="classes/sections/:classId" element={<SectionForClasses />} />
           <Route path="classes/sections/:classId/topic/:sectionId" element={<TopicsForClasses />} />
           <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId" element={<SubtopicsForClasses />} />
+          <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId/tasks/:subtopicId" element={<TasksForClasses />} />
         </Routes>
       </div>
     </div>

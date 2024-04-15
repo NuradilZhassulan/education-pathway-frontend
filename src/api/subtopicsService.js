@@ -6,8 +6,16 @@ export const fetchSubtopics = async () => {
   return axios.get(baseUrl);
 };
 
+export const fetchSubtopicsById = (subtopicId) => {
+  return axios.get(`${baseUrl}?id=${subtopicId}`);
+};
+
 export const fetchSubtopicsByTopicId = (topicId) => {
   return axios.get(`${baseUrl}?topic_id=${topicId}`);
+};
+
+export const fetchSubtopicsByTopicIdAndGoalId = (topicId, goalId) => {
+  return axios.get(`${baseUrl}?topic_id=${topicId}&goal_id=${goalId}`);
 };
 
 export const createSubtopic = async (subtopic) => {

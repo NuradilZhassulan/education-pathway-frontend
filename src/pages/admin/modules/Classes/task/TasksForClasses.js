@@ -1,37 +1,39 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  createSubtopic,
-  deleteSubtopic,
-  fetchSubtopicsByTopicId,
-  updateSubtopic,
-} from "../../../../../api/subtopicsService";
+  createTask,
+  deleteTask,
+  fetchTasksBySubtopicId,
+  updateTask,
+} from "../../../../../api/tasksService";
 import { fetchClassesByClassId } from "../../../../../api/classService";
 import { fetchSectionsById } from "../../../../../api/sectionsService";
 import { fetchTopicsById } from "../../../../../api/topicsService";
+import { fetchSubtopicsById } from "../../../../../api/subtopicsService";
 import Breadcrumb from "../../../../../components/Breadcrumb";
-import AddOrEditSubtopicModal from "../modals/AddOrEditSubtopicModal";
+import AddOrEditTaskModal from "../modals/AddOrEditTaskModal";
 import DataTable from "../../../../../components/DataTable";
 
-const SubtopicsForClasses = () => {
-  const { classId, sectionId, topicId } = useParams();
+const TasksForClasses = () => {
+  const { classId, sectionId, topicId, subtopicId, taskId } = useParams();
   const navigate = useNavigate();
 
-  const [subtopics, setSubtopics] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [className, setClassName] = useState("");
   const [sectionName, setSectionName] = useState("");
   const [topicName, setTopicName] = useState("");
-  const [currentSubtopic, setCurrentSubtopic] = useState(null);
+  const [subtopicName, setSubtopicName] = useState("");
+  const [currentTask, setCurrentTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const loadSubtopics = useCallback(async () => {
-    await fetchSubtopicsByTopicId(topicId)
-      .then((response) => setSubtopics(response.data))
-      .catch((error) => console.error("Error fetching topics:", error));
+  const loadTasks = useCallback(async () => {
+    await fetchTasksBySubtopicId(subtopicId)
+      .then((response) => setTasks(response.data))
+      .catch((error) => console.error("Error fetching Tasks:", error));
   }, [topicId]);
 
   useEffect(() => {
-    loadSubtopics();
+    loadTasks();
     const fetchClassName = async () => {
       try {
         const responseClassesByClassId = await fetchClassesByClassId(classId);
@@ -40,12 +42,14 @@ const SubtopicsForClasses = () => {
         setSectionName(responseSectionsById.data[0].name);
         const responseTopicsById = await fetchTopicsById(topicId);
         setTopicName(responseTopicsById.data[0].name);
+        const responseSubtopicsById = await fetchSubtopicsById(subtopicId);
+        setSubtopicName(responseSubtopicsById.data[0].name);
       } catch (error) {
         console.error("Error fetching classes:", error);
       }
     };
     fetchClassName();
-  }, [classId, loadSubtopics]);
+  }, [classId, loadTasks]);
 
   const breadcrumbPaths = [
     { name: "Главная", link: "/admin" },
@@ -59,28 +63,32 @@ const SubtopicsForClasses = () => {
       name: `${topicName}`,
       link: `/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}`,
     },
+    {
+      name: `${subtopicName}`,
+      link: `/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${subtopicId}`,
+    },
   ];
 
-  const handleSave = async (subtopicData, id) => {
+  const handleSave = async (taskData, id) => {
     if (id) {
-      await updateSubtopic(id, subtopicData);
+      await updateTask(id, taskData);
     } else {
-      await createSubtopic(subtopicData);
+      await createTask(taskData);
     }
-    loadSubtopics();
+    loadTasks();
   };
 
-  const openEditModal = (subtopic) => {
-    setCurrentSubtopic(subtopic);
+  const openEditModal = (task) => {
+    setCurrentTask(task);
     setIsModalOpen(true);
   };
 
   const handleDelete = async (id) => {
-    await deleteSubtopic(id);
-    loadSubtopics();
+    await deleteTask(id);
+    loadTasks();
   };
 
-  const handleSubtopics = (id) => {
+  const handleTasks = (id) => {
     navigate(`/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${id}`);
   };
 
@@ -91,7 +99,7 @@ const SubtopicsForClasses = () => {
       </div>
       <button
         onClick={() => {
-          setCurrentSubtopic(null);
+          setCurrentTask(null);
           setIsModalOpen(true);
         }}
         className="p-2 bg-blue-500 text-white rounded"
@@ -99,23 +107,23 @@ const SubtopicsForClasses = () => {
         Добавить
       </button>
       {isModalOpen && (
-        <AddOrEditSubtopicModal
-          initialData={currentSubtopic}
+        <AddOrEditTaskModal
+          initialData={currentTask}
           onClose={() => setIsModalOpen(false)}
           onSave={handleSave}
         />
       )}
       <DataTable
-        data={subtopics}
-        tableName={"Микротемы"}
+        data={tasks}
+        tableName={"Задания"}
         tableActions={"Действия"}
         onEdit={openEditModal}
         onDelete={handleDelete}
-        onMoreInfo={handleSubtopics}
+        onMoreInfo={handleTasks}
         onMoreInfoText={"Открыть"}
       />
     </div>
   );
 };
 
-export default SubtopicsForClasses;
+export default TasksForClasses;

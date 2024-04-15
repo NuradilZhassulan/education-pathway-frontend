@@ -1,22 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {
+  fetchGoals,
+} from "../../../../../api/goalsService";
 
 const AddOrEditSubtopicModal = ({ onClose, onSave, initialData = null }) => {
   const { topicId } = useParams();
   const [subtopicName, setSubtopicName] = useState("");
 
+  const [availableGoals, setAvailableGoals] = useState([]);
+  const [selectedGoals, setSelectedGoals] = useState([]);
+
+  console.log(availableGoals)
+
   useEffect(() => {
-        if (initialData) {
-          setSubtopicName(initialData.name);
-        }
+    if (initialData) {
+      setSubtopicName(initialData.name);
+      // Инициализируем selectedGoals идентификаторами goals из initialData
+      const goalIds = initialData.goals.map(goal => goal.id);
+      setSelectedGoals(goalIds);
+    }
+    
+    loadGoals();
   }, [initialData]);
+
+  const loadGoals = async () => {
+    const data = await fetchGoals();
+    setAvailableGoals(data.data);
+  };
 
   const handleSave = async () => {
     if (subtopicName) {
-      const topicData = { name: subtopicName, topic_id: topicId };
+      const topicData = {
+        name: subtopicName,
+        topic_id: topicId,
+        goals_ids: selectedGoals,
+      };
       await onSave(topicData, initialData?.id);
       onClose();
     }
+  };
+
+  const handleGoalToggle = (goalId) => {
+    setSelectedGoals((prev) =>
+      prev.includes(goalId)
+        ? prev.filter((id) => id !== goalId)
+        : [...prev, goalId]
+    );
   };
 
   return (
@@ -35,13 +65,26 @@ const AddOrEditSubtopicModal = ({ onClose, onSave, initialData = null }) => {
           <>
             <div className="flex items-center justify-between">
               <div className="flex-1 ml-2">
-                <label>Название микротему:</label>
+                <label>Название микротемы:</label>
                 <input
                   type="text"
                   className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                   value={subtopicName}
                   onChange={(e) => setSubtopicName(e.target.value)}
                 />
+              </div>
+              <div className="flex-1 ml-2">
+                <h2>Добавить тег цели</h2>
+                {availableGoals?.map((goal) => (
+                  <div key={goal.id}>
+                    <input
+                      type="checkbox"
+                      checked={selectedGoals.includes(goal.id)}
+                      onChange={() => handleGoalToggle(goal.id)}
+                    />{" "}
+                     {goal.class_.name} {" "} {goal.name}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex justify-center space-x-4 mt-4">

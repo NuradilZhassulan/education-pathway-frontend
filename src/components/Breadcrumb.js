@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Breadcrumb = ({ paths }) => {
   return (
-    <nav>
+    <nav className="my-4">
       {paths.map((path, index) => (
         <span key={index}>
           {path.link ? (
