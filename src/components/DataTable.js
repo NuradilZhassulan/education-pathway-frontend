@@ -6,6 +6,7 @@ const DataTable = ({
   tableActions,
   onEdit,
   onDelete,
+  showMoreInfo,
   onMoreInfo,
   onMoreInfoText
 }) => (
@@ -27,6 +28,7 @@ const DataTable = ({
               onDelete={() => onDelete(item.id)}
               onMoreInfo={() => onMoreInfo(item.id)}
               moreInfoText={onMoreInfoText}
+              showMoreInfo={showMoreInfo}
             />
           </td>
         </tr>

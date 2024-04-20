@@ -79,8 +79,7 @@ const TasksForClasses = () => {
   };
 
   const openEditModal = (task) => {
-    setCurrentTask(task);
-    setIsModalOpen(true);
+    handleTasks(task.id)
   };
 
   const handleDelete = async (id) => {
@@ -89,7 +88,10 @@ const TasksForClasses = () => {
   };
 
   const handleTasks = (id) => {
-    navigate(`/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${id}`);
+    id ? 
+      navigate(`/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${subtopicId}/addOrEditTask/${id}`)
+      :
+      navigate(`/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${subtopicId}/addOrEditTask/`)
   };
 
   return (
@@ -99,8 +101,7 @@ const TasksForClasses = () => {
       </div>
       <button
         onClick={() => {
-          setCurrentTask(null);
-          setIsModalOpen(true);
+          handleTasks()
         }}
         className="p-2 bg-blue-500 text-white rounded"
       >
@@ -119,8 +120,9 @@ const TasksForClasses = () => {
         tableActions={"Действия"}
         onEdit={openEditModal}
         onDelete={handleDelete}
-        onMoreInfo={handleTasks}
-        onMoreInfoText={"Открыть"}
+        showMoreInfo={false}
+        // onMoreInfo={handleTasks}
+        // onMoreInfoText={"Открыть"}
       />
     </div>
   );

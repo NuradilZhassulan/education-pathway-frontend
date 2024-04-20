@@ -8,6 +8,9 @@ import SectionForClasses from './modules/Classes/section/SectionForClasses';
 import TopicsForClasses from './modules/Classes/topic/TopicsForClasses'
 import SubtopicsForClasses from './modules/Classes/subtopic/SubtopicsForClasses'
 import TasksForClasses from './modules/Classes/task/TasksForClasses';
+import AddOrEditTask from './modules/Classes/task/AddOrEditTask'
+import KeyboardElementCreator from '../../components/KeyboardElement';
+import Tests from './modules/Tests/main/Tests'
 
 const AdminPage = () => {
   return (
@@ -24,6 +27,10 @@ const AdminPage = () => {
           <Route path="classes/sections/:classId/topic/:sectionId" element={<TopicsForClasses />} />
           <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId" element={<SubtopicsForClasses />} />
           <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId/tasks/:subtopicId" element={<TasksForClasses />} />
+          <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId/tasks/:subtopicId/addOrEditTask/:taskId?" element={<AddOrEditTask />} />
+          <Route path="keyboardElementCreator" element={<KeyboardElementCreator />} />
+          <Route path="tests" element={<Tests />} />
+          {/* <Route path="tests/createTest" element={<CreateTest />} /> */}
         </Routes>
       </div>
     </div>
