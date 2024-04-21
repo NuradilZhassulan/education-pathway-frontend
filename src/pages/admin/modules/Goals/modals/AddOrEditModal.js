@@ -31,22 +31,22 @@ const AddGoalModal = ({ onClose, onSave, initialData = null }) => {
   const handleSave = async () => {
     if (goalName && selectedClass) {
       const goalData = { name: goalName, class_id: selectedClass };
-      await onSave(goalData, initialData?.id); 
+      await onSave(goalData, initialData?.id);
       onClose();
     }
   };
 
   return (
     <div
-      className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full"
       onClick={onClose}
     >
       <div
-        className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        className="relative top-20 mx-auto p-5  w-96 shadow-lg rounded-md text-gray-200 dark:bg-gray-700 dark:text-gray-200"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mt-3 text-center">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+          <h3 className="text-lg leading-6 font-medium mb-5">
             Добавить новую цель
           </h3>
           {isLoading ? (
@@ -55,11 +55,11 @@ const AddGoalModal = ({ onClose, onSave, initialData = null }) => {
             <>
               {classes && classes.length > 0 ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 mr-2">
+                  <div className="">
+                    <div className="flex items-center justify-between mb-5">
                       <label>Класс:</label>
                       <select
-                        className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                        className="flex-1 max-w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         value={selectedClass}
                         onChange={(e) => setSelectedClass(e.target.value)}
                       >
@@ -70,11 +70,11 @@ const AddGoalModal = ({ onClose, onSave, initialData = null }) => {
                         ))}
                       </select>
                     </div>
-                    <div className="flex-1 ml-2">
+                    <div className="flex items-center justify-between">
                       <label>Название цели:</label>
                       <input
                         type="text"
-                        className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                        className="flex-1 max-w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         value={goalName}
                         onChange={(e) => setGoalName(e.target.value)}
                       />
@@ -87,7 +87,7 @@ const AddGoalModal = ({ onClose, onSave, initialData = null }) => {
               <div className="flex justify-center space-x-4 mt-4">
                 <button
                   id="ok-btn"
-                  className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   onClick={handleSave}
                 >
                   Добавить

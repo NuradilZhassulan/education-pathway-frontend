@@ -11,6 +11,7 @@ import TasksForClasses from './modules/Classes/task/TasksForClasses';
 import AddOrEditTask from './modules/Classes/task/AddOrEditTask'
 import KeyboardElementCreator from '../../components/KeyboardElement';
 import Tests from './modules/Tests/main/Tests'
+import AddOrEditTest from './modules/Tests/modals/AddOrEditTest';
 
 const AdminPage = () => {
   return (
@@ -30,6 +31,7 @@ const AdminPage = () => {
           <Route path="classes/sections/:classId/topic/:sectionId/subtopic/:topicId/tasks/:subtopicId/addOrEditTask/:taskId?" element={<AddOrEditTask />} />
           <Route path="keyboardElementCreator" element={<KeyboardElementCreator />} />
           <Route path="tests" element={<Tests />} />
+          <Route path="tests/addOrEditTest/:testId?" element={<AddOrEditTest />} />
           {/* <Route path="tests/createTest" element={<CreateTest />} /> */}
         </Routes>
       </div>

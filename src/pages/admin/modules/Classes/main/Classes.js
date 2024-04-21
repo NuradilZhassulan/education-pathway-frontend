@@ -54,7 +54,7 @@ const Classes = () => {
           setCurrentClass(null);
           setIsModalOpen(true);
         }}
-        className="p-2 bg-blue-500 text-white rounded"
+        className="p-2 bg-indigo-500 text-white rounded"
       >
         Добавить
       </button>

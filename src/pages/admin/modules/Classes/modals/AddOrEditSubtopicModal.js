@@ -68,7 +68,7 @@ const AddOrEditSubtopicModal = ({ onClose, onSave, initialData = null }) => {
                 <label>Название микротемы:</label>
                 <input
                   type="text"
-                  className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                  className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                   value={subtopicName}
                   onChange={(e) => setSubtopicName(e.target.value)}
                 />
@@ -90,7 +90,7 @@ const AddOrEditSubtopicModal = ({ onClose, onSave, initialData = null }) => {
             <div className="flex justify-center space-x-4 mt-4">
               <button
                 id="ok-btn"
-                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 onClick={handleSave}
               >
                 Добавить

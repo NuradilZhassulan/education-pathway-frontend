@@ -30,14 +30,14 @@ const KeyboardElementCreator = () => {
       <div className="flex flex-col items-center">
         <input
           type="text"
-          className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+          className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
           value={keyboardName}
           onChange={(e) => setKeyboardName(e.target.value)}
           placeholder="Введите символ клавиатуры"
         />
         <button
           onClick={handleAddKeyboardElement}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           disabled={loading}
         >
           {loading ? 'Добавление...' : 'Добавить'}

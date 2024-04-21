@@ -7,7 +7,7 @@ const Breadcrumb = ({ paths }) => {
       {paths.map((path, index) => (
         <span key={index}>
           {path.link ? (
-            <Link to={path.link} className="text-blue-500 hover:text-blue-700">
+            <Link to={path.link} className="text-indigo-500 hover:text-indigo-700">
               {path.name}
             </Link>
           ) : (

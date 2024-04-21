@@ -8,7 +8,11 @@ import { fetchSubtopicsById } from "../../../../../api/subtopicsService";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { fetchKeyboardElements } from "../../../../../api/keyboardElementsService";
-import { createTask, fetchTaskById, updateTask } from "../../../../../api/tasksService";
+import {
+  createTask,
+  fetchTaskById,
+  updateTask,
+} from "../../../../../api/tasksService";
 
 const AddOrEditTask = () => {
   const { classId, sectionId, topicId, subtopicId, taskId } = useParams();
@@ -27,13 +31,20 @@ const AddOrEditTask = () => {
   const [taskHint, setTaskHint] = useState("");
   const [answers, setAnswers] = useState([""]);
 
-  console.log(taskId)
+  console.log(taskId);
 
   useEffect(() => {
     if (taskId) {
       fetchTaskById(taskId).then((data) => {
-        const { name, description, correct_answers, solutions, hints, keyboard_elements } = data.data[0];
-        console.log(data.data[0])
+        const {
+          name,
+          description,
+          correct_answers,
+          solutions,
+          hints,
+          keyboard_elements,
+        } = data.data[0];
+        console.log(data.data[0]);
         setTask(data.data[0]);
         setNameTask(name);
         setTaskDescription(description);
@@ -87,7 +98,6 @@ const AddOrEditTask = () => {
     },
   ];
 
-
   const addAnswer = () => {
     setAnswers([...answers, ""]);
   };
@@ -138,7 +148,9 @@ const AddOrEditTask = () => {
     } else {
       try {
         const newTask = await createTask(taskData); // Создание новой задачи
-        navigate(`/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${subtopicId}/addOrEditTask/${newTask.id}`); // Перенаправление к редактированию созданной задачи
+        navigate(
+          `/admin/classes/sections/${classId}/topic/${sectionId}/subtopic/${topicId}/tasks/${subtopicId}/addOrEditTask/${newTask.id}`
+        ); // Перенаправление к редактированию созданной задачи
       } catch (error) {
         console.error("Failed to create task:", error.message); // Обработка ошибок при создании задачи
       }
@@ -162,59 +174,69 @@ const AddOrEditTask = () => {
       </div>
       <div className="p-8">
         <div className="flex-1 ml-2">
-          <label>Название задачи:</label>
+          <label
+            htmlFor="testName"
+            className="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Название задачи:
+          </label>
           <input
             type="text"
-            className="ml-5"
             value={nameTask}
             onChange={(e) => setNameTask(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+            placeholder="Введите название задачи"
+            required
           />
         </div>
-        <div className="flex items-start mb-4">
-          <div className="w-8">1)</div>
-          <div className="flex-1">
-            <CKEditor
-              editor={ClassicEditor}
-              data={taskDescription}
-              onChange={handleDescriptionChange}
-            />
+        <div className="flex items-start mb-4 mt-4 bg-gray-200 p-5 border border-gray-300 rounded-lg">
+          <div className="flex-1 ml-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              1) Описание задачи
+            </label>
+            <div className="flex-1">
+              <CKEditor
+                editor={ClassicEditor}
+                data={taskDescription}
+                onChange={handleDescriptionChange}
+              />
+            </div>
           </div>
         </div>
-        <div className="flex items-center mb-4">
-          <div className="w-8">2)</div>
-          <div className="flex-1">
-            <label>Верные ответы:</label>
-            {answers.map((answer, index) => (
-              <div key={index} className="flex items-center mt-2">
-                <input
-                  type="text"
-                  value={answer}
-                  onChange={(e) => handleAnswerChange(index, e.target.value)}
-                  className="p-2 border border-gray-300 rounded flex-1"
-                />
-                <button
-                  onClick={() => addAnswer()}
-                  className="ml-2 text-blue-500"
-                >
-                  +
-                </button>
-                <button
-                  onClick={() => removeAnswer(index)}
-                  className="ml-2 text-red-500"
-                >
-                  -
-                </button>
-              </div>
-            ))}
-            <button onClick={addAnswer} className="ml-2 text-blue-500">
-              +
-            </button>
+        <div className="flex items-start mb-4 mt-4 bg-gray-200 p-5 border border-gray-300 rounded-lg">
+          <div className="flex-1 ml-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              2) Верные ответы
+            </label>
+            <div className="">
+              {answers.map((answer, index) => (
+                <div key={index} className="flex items-center mb-5">
+                  <input
+                    type="text"
+                    value={answer}
+                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                    placeholder="Введите верный ответ"
+                  />
+                  <button
+                    onClick={() => removeAnswer(index)}
+                    className="flex-1 w-14 ml-5 text-red-700 px-5 py-2.5 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm  text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
+                  >
+                    -
+                  </button>
+                </div>
+              ))}
+              <button onClick={addAnswer} className="flex-1 w-14 mt-5text-indigo-700 hover:text-white border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-indigo-500 dark:text-indigo-500 dark:hover:text-white dark:hover:bg-indigo-500 dark:focus:ring-indigo-800">
+                +
+              </button>
+            </div>
           </div>
         </div>
-        <div className="flex items-center mb-4">
-          <div className="w-8">3)</div>
-          <div className="flex-1">
-            <label>Клавиатура:</label>
+        <div className="flex items-start mb-4 mt-4 bg-gray-200 p-5 border border-gray-300 rounded-lg">
+          <div className="flex-1 ml-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              3) Клавиатура
+            </label>
             <div className="flex flex-col space-y-2">
               {elements.map((element) => (
                 <label key={element.id} className="flex items-center space-x-2">
@@ -222,7 +244,7 @@ const AddOrEditTask = () => {
                     type="checkbox"
                     checked={selectedElements.includes(element.id)}
                     onChange={() => handleCheckboxChange(element.id)}
-                    className="form-checkbox h-5 w-5 text-blue-600"
+                    className="form-checkbox h-5 w-5 text-indigo-600"
                   />
                   <span>{element.symbol}</span>
                 </label>
@@ -230,10 +252,11 @@ const AddOrEditTask = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-start mb-4">
-          <div className="w-8">4)</div>
-          <div className="flex-1">
-            <label>Решение:</label>
+        <div className="flex items-start mb-4 mt-4 bg-gray-200 p-5 border border-gray-300 rounded-lg">
+          <div className="flex-1 ml-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              4) Решение
+            </label>
             <CKEditor
               editor={ClassicEditor}
               data={taskSolution}
@@ -241,10 +264,11 @@ const AddOrEditTask = () => {
             />
           </div>
         </div>
-        <div className="flex items-start mb-4">
-          <div className="w-8">5)</div>
-          <div className="flex-1">
-            <label>Подсказка:</label>
+        <div className="flex items-start mb-4 mt-4 bg-gray-200 p-5 border border-gray-300 rounded-lg">
+          <div className="flex-1 ml-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              5) Подсказка
+            </label>
             <CKEditor
               editor={ClassicEditor}
               data={taskHint}
@@ -255,7 +279,7 @@ const AddOrEditTask = () => {
 
         <button
           onClick={handleSubmit}
-          className="px-4 py-2 bg-blue-500 text-white"
+          className="mt-5 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Сохранить
         </button>

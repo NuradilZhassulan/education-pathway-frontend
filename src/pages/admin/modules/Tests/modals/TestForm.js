@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const TestForm = ({ onSave }) => {
-  const [testName, setTestName] = useState('');
+const TestForm = ({ onSave, initialName = '' }) => {
+  const [testName, setTestName] = useState(initialName);
+  
+  useEffect(() => {
+    setTestName(initialName);  // Обновляем имя при изменении initialName
+  }, [initialName]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(testName);
-    setTestName('');
+    // setTestName('');
   };
 
   return (
