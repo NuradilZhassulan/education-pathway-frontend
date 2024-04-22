@@ -13,11 +13,10 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.location.pathname !== "/") {
-                window.history.replaceState(null, null, '/education-pathway-frontend/');
-            }
-        });
+        if (!location.hash) {
+            const path = location.pathname.split('/education-pathway-frontend')[1];
+            location.replace('/education-pathway-frontend/#' + path);
+        }
     </script>
 
 </body>
