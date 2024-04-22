@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/education-pathway-frontend/static/css/main.eda03553.css",
+    "main.js": "/education-pathway-frontend/static/js/main.0e2a455a.js",
+    "index.html": "/education-pathway-frontend/index.html",
+    "main.eda03553.css.map": "/education-pathway-frontend/static/css/main.eda03553.css.map",
+    "main.0e2a455a.js.map": "/education-pathway-frontend/static/js/main.0e2a455a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eda03553.css",
+    "static/js/main.0e2a455a.js"
+  ]
+}
