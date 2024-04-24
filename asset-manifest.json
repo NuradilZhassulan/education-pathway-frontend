@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/education-pathway-frontend/static/css/main.5c033af4.css",
-    "main.js": "/education-pathway-frontend/static/js/main.be763946.js",
+    "main.css": "/education-pathway-frontend/static/css/main.78d18789.css",
+    "main.js": "/education-pathway-frontend/static/js/main.a2b463d5.js",
     "index.html": "/education-pathway-frontend/index.html",
-    "main.5c033af4.css.map": "/education-pathway-frontend/static/css/main.5c033af4.css.map",
-    "main.be763946.js.map": "/education-pathway-frontend/static/js/main.be763946.js.map"
+    "main.78d18789.css.map": "/education-pathway-frontend/static/css/main.78d18789.css.map",
+    "main.a2b463d5.js.map": "/education-pathway-frontend/static/js/main.a2b463d5.js.map"
   },
   "entrypoints": [
-    "static/css/main.5c033af4.css",
-    "static/js/main.be763946.js"
+    "static/css/main.78d18789.css",
+    "static/js/main.a2b463d5.js"
   ]
 }
