@@ -11,7 +11,7 @@ export const fetchTaskById = (id) => {
 };
 
 export const fetchTasksBySubtopicId = (subtopicId) => {
-  return axios.get(`${baseUrl}?subtopic_id=${subtopicId}`);
+  return axios.get(`${baseUrl}?subtopic=${subtopicId}`);
 };
 
 export const createTask = async (task) => {

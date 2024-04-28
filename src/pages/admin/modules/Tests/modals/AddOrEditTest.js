@@ -10,6 +10,7 @@ import {
 import { fetchTasks } from "../../../../../api/tasksService";
 import TestForm from "./TestForm";
 import TaskSelector from "./TaskSelector";
+import { fetchGoals } from "../../../../../api/goalsService";
 
 const AddOrEditTest = () => {
   const { testId } = useParams();
@@ -17,11 +18,15 @@ const AddOrEditTest = () => {
   const [tasks, setTasks] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
   const [firstTaskId, setFirstTaskId] = useState(null);
+  const [goals, setGoals] = useState([]);
+  const [selectedGoal, setSelectedGoal] = useState("");
 
   useEffect(() => {
     const getTasks = async () => {
       const fetchedTasks = await fetchTasks();
       setAllTasks(fetchedTasks.data);
+      const fetchedGoals = await fetchGoals();
+      setGoals(fetchedGoals.data);
     };
     getTasks();
   }, []);
@@ -30,9 +35,11 @@ const AddOrEditTest = () => {
     const fetchTestData = async () => {
       if (testId) {
         const fetchedTest = await fetchTestById(testId);
+        console.log(fetchedTest.data);
         setTestName(fetchedTest.data[0].name);
         setTasks(fetchedTest.data[0].tasks);
         setFirstTaskId(fetchedTest.data[0].tasks[0].task.id);
+        setSelectedGoal(fetchedTest.data[0].goal);
       }
     };
 
@@ -45,10 +52,11 @@ const AddOrEditTest = () => {
     try {
       const test = {
         name: testName,
+        goal: selectedGoal,
         tasks: tasks.map((task) => ({
           task_id: task.task.id, // Изменено с taskId на task
-          next_task_correct_id: task.next_task_correct.id || null, // Убедитесь, что отправляете null, если значение пустое
-          next_task_incorrect_id: task.next_task_incorrect.id || null,
+          next_task_correct_id: task.next_task_correct?.id || null, // Убедитесь, что отправляете null, если значение пустое
+          next_task_incorrect_id: task.next_task_incorrect?.id || null,
         })),
       };
       console.log(test);
@@ -84,7 +92,10 @@ const AddOrEditTest = () => {
     setTasks(updatedTasks);
   };
 
-  console.log(tasks);
+  const handleGoal = (value) => {
+    console.log(value);
+    setSelectedGoal(value);
+  };
 
   return (
     <div className="p-8">
@@ -108,10 +119,33 @@ const AddOrEditTest = () => {
           required
         />
       </div>
+      <div className="mt-4">
+        <label
+          htmlFor="testName"
+          className="block mb-2 text-sm font-medium text-gray-900 "
+        >
+          Выберите цель
+        </label>
+        <select
+          onChange={(e) => handleGoal(e.target.value)}
+          value={selectedGoal || ""}
+          className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+        >
+          <option value="">Выберите цель</option>
+          {goals.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.class_.name} {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <TaskSelector onChange={addTaskToTest} initialValue={firstTaskId} />
       <ul>
         {tasks.map((task, index) => (
-          <li key={index} className="mt-2 bg-gray-200 p-5 border border-gray-300 rounded-lg ">
+          <li
+            key={index}
+            className="mt-2 bg-gray-200 p-5 border border-gray-300 rounded-lg "
+          >
             <label
               htmlFor="testName"
               className="block mb-2 text-sm font-medium text-gray-900 "
@@ -136,7 +170,7 @@ const AddOrEditTest = () => {
                         "next_task_correct"
                       )
                     }
-                    value={task.next_task_correct?.id}
+                    value={task.next_task_correct?.id || ""}
                     className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                   >
                     <option value="">Выберите следующее задание...</option>
@@ -174,7 +208,7 @@ const AddOrEditTest = () => {
                         "next_task_incorrect"
                       )
                     }
-                    value={task.next_task_incorrect?.id}
+                    value={task.next_task_incorrect?.id || ""}
                     className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                   >
                     <option value="">Выберите следующее задание...</option>

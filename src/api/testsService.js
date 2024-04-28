@@ -10,6 +10,10 @@ export const fetchTestById = (id) => {
   return axios.get(`${baseUrl}?id=${id}`);
 };
 
+export const fetchTestByGoalId = (id) => {
+  return axios.get(`${baseUrl}?goal_id=${id}`);
+};
+
 export const createTest = async (test) => {
   return axios.post(baseUrl, test);
 };
